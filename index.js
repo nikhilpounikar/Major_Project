@@ -3,6 +3,11 @@ const express = require('express');
 const app = express();
 
 const port = 8000;
+const layouts = require('express-ejs-layouts');
+
+
+// Layouts Should be rendered before routing
+app.use(layouts);
 
 // let middleware handle initial routing
 app.use('/',require('./routes/index'));
