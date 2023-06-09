@@ -4,6 +4,9 @@ const app = express();
 
 const port = 8000;
 
+// let middleware handle initial routing
+app.use('/',require('./routes/index'));
+
 app.listen(port,function(err){
 
     if(err){
