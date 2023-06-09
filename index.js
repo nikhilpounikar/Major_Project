@@ -5,7 +5,7 @@ const app = express();
 const port = 8000;
 const layouts = require('express-ejs-layouts');
 
-
+app.use(express.static('./assets'));
 // Layouts Should be rendered before routing
 app.use(layouts);
 
