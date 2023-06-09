@@ -6,6 +6,8 @@ const port = 8000;
 const layouts = require('express-ejs-layouts');
 
 app.use(express.static('./assets'));
+app.set('layout extractStyle ',true);
+app.set('layout extractScripts ',true);
 // Layouts Should be rendered before routing
 app.use(layouts);
 
