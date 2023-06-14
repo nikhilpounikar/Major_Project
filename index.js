@@ -12,6 +12,10 @@ app.set('layout extractScripts ',true);
 // Layouts Should be rendered before routing
 app.use(layouts);
 
+const cookie = require('cookie-parser');
+
+app.use(express.urlencoded());
+
 // let middleware handle initial routing
 app.use('/',require('./routes/index'));
 
