@@ -1,3 +1,5 @@
+const User = require('../models/User');
+
 module.exports.profile = function(req,res){
 
     // return res.send('<h1>You are on profile</h1>');
@@ -33,14 +35,26 @@ module.exports.signIn = function(req,res){
 // creates the users
 module.exports.create = function(req,res){
 
-    // return res.send('<h1>You are on profile</h1>');
+    if(req.body.password != req.body.confirm_password){
+        return res.redirect('back');
+    }
 
-    // return res.render('user_sign_in',{
+    User.findOne({"email":req.body.email}).then((user)=>{
 
-    //    // person:"Taliq"
-    //    title:"Sign In"
-    // })
-
+        if(user == undefined || user == null){
+            User.create(req.body).then((user) =>{
+                console.log('Object saved successfully:', user);
+                return res.redirect('/user/sign-in');
+            }).catch((err) =>{
+                console.error(err);
+            })
+        }else{
+            console.log("User Already Exits");
+        }
+    }).catch((err)=>{
+        console.log("Error Finding User", err);
+    })
+   
     return res.redirect('back');
 }
 
