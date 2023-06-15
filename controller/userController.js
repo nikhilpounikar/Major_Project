@@ -23,11 +23,12 @@ module.exports.signUp = function(req,res){
 
 module.exports.signIn = function(req,res){
 
-
     return res.render('user_sign_in',{
 
-       title:"Sign In"
-    })
+        // person:"Taliq"
+        title:"Sign In"
+     })
+    
 }
 
 // creates the users
@@ -62,13 +63,32 @@ module.exports.create = function(req, res) {
 
 module.exports.createSession = function(req,res){
 
-    // return res.send('<h1>You are on profile</h1>');
+    //find the user
+    User.findOne({ "email": req.body.email })
+    .then((user) => {
+        console.log(user);
+      // if user found
+      if (user != null && user !=undefined) {
+        //if password doesn't match 
+        console.log(user,req.body);
+        if(user.password != req.body.password){
+            return res.redirect('back');
+        }
 
-    // return res.render('user_sign_in',{
+        // handle session Creation
+        res.cookie('user_id',user.id);
 
-    //    // person:"Taliq"
-    //    title:"Sign In"
-    // })
-
-    return res.redirect('back');
+        return res.redirect('/user/profile');
+        
+      } else {
+        // handle user not found
+        console.log("User Not Found");
+        return res.redirect('back');
+      }
+    })
+    .catch((err) => {
+      // handle error finding user
+      console.log("Error Finding User", err);
+      return res.redirect('back');
+    });
 }
