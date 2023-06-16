@@ -83,7 +83,8 @@ module.exports.create = function (req, res) {
 };
 
 module.exports.createSession = function (req, res) {
-  //find the user
+  // manual Authentication
+ /* //find the user
   User.findOne({ email: req.body.email })
     .then((user) => {
       // if user found
@@ -107,5 +108,10 @@ module.exports.createSession = function (req, res) {
       // handle error finding user
       console.log("Error Finding User", err);
       return res.redirect("back");
-    });
+    }); */
+
+
+    // passport authentication
+
+    return res.redirect('/');
 };
