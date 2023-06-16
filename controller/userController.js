@@ -13,7 +13,6 @@ module.exports.profile = function (req, res) {
           if (user != null && user != undefined) {
             //if password doesn't match
             //console.log(user,req.body);
-            console.log("user profile",user);
             return res.render("profile", {
               title: "Profile",
               user: user,
@@ -87,11 +86,9 @@ module.exports.createSession = function (req, res) {
   //find the user
   User.findOne({ email: req.body.email })
     .then((user) => {
-      console.log(user);
       // if user found
       if (user != null && user != undefined) {
         //if password doesn't match
-        console.log(user, req.body);
         if (user.password != req.body.password) {
           return res.redirect("back");
         }
