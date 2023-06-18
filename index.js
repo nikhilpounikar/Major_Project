@@ -40,7 +40,7 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(passport.setAuthenticatedUser);
 // let middleware handle initial routing
 app.use('/',require('./routes/index'));
 
