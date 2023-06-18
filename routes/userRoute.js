@@ -13,7 +13,9 @@ router.get('/sign-in',userController.signIn);
 
 router.post('/create',userController.create);
 
+router.get('/sign-out',userController.destroySession);
 // Using manual Authenticatio
+
 //router.post('/create-session',userController.createSession);
 
 // using Passport authentication
