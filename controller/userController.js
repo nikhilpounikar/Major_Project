@@ -134,7 +134,11 @@ module.exports.createSession = function (req, res) {
 
 // responsible for sign-out
 module.exports.destroySession = function (req, res) {
-  req.logout();
-
-  return res.redirect("/");
+  req.logout(function (err) {
+    if (err) {
+      console.log("Error loging Out",err);
+      return res.redirect('back');
+    }
+    return res.redirect("/");
+  });
 };
