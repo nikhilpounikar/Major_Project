@@ -1,28 +1,26 @@
 
-<!-- Code For Partial  -->
+<%# Code For Partial  -->
 <!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><%= title%></title>
+    <title> title</title>
 </head>
 <body>
 
-    <%- include('_header') %>
-
+   include('_header') 
     <h1>
-        Hello <%= person%>
     </h1>
-    <%- include('_footer') %>
+   include('_footer') 
 </body>
 </html> -->
 
-
+I am some comment! %>
 <!-- Code for Layouts -->
 <link rel="stylesheet" href="./css/layout.css">
 <h1>
-    Hello <%= person%>
+   
 </h1>
 
 <section id="feed-post">
@@ -31,4 +29,19 @@
         <textarea name="content" cols="30" rows="3"></textarea>
         <input type="submit" value="Post">
     </form>
+
+    <div id="feed-post-container">
+        <ul id="">
+            
+            <% for(post of posts) {%>
+
+                <li> <%= post.content %>
+                    <small>
+                        <%= post.user %>
+                    </small>
+                </li>
+            <% } %>
+
+        </ul>
+    </div>
 </section>

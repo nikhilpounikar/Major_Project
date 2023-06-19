@@ -1,10 +1,25 @@
-module.exports.home = function(req,res){
+const Post = require("../models/Post");
 
-   console.log(req.cookies);
-   res.cookie('user_id',17);
-   return res.render('home',{
+module.exports.home = function (req, res) {
+  // console.log(req.cookies);
+  // res.cookie('user_id',17);
+  // return res.render('home',{
 
-    title:"Views",
-    person:"Lucky"
-   })
-}
+  //  title:"Views",
+  //  person:"Lucky"
+  // })
+
+  Post.find({})
+    .populate("user")
+    .exec()
+    .then((posts) => {
+      return res.render("home", {
+        title: "Project | Home",
+        posts: posts,
+      });
+    })
+    .catch((err) => {
+      console.log("Error Fetching Post",err);
+      return res.redirect("/user/sign-in");
+    });
+};

@@ -10,6 +10,7 @@ module.exports.create = function(req,res){
     .then((post)=>{
 
         console.log(post,"Created.");
+        return res.redirect('back');
     })
     .catch((err)=>{
 
