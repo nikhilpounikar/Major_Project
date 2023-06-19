@@ -39,8 +39,20 @@ I am some comment! %>
 
                 <li> <%= post.content %>
                     <small>
-                        <%= post.user %>
+                        
+                        <span><%= post._id %> with _id</span>
+                        <span><%= post.id %> without _id</span>
+                
                     </small>
+
+                    <% if(locals.user) {%>
+                        <form action="/comments/create" method="post">
+                            <!-- <textarea name="content" cols="30" rows="3"></textarea> -->
+                            <input type="text" name="content" placeholder="Type Here">
+                            <input type="hidden" name="post" value="<%= post._id %>">
+                            <input type="submit" name="Add comment" id="">
+                        </form>
+                    <% } %>
                 </li>
             <% } %>
 

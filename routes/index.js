@@ -12,6 +12,6 @@ console.log("Router loader");
 router.get('/',homeController.home);
 router.use('/user',require('./userRoute'));
 router.use('/posts',require('./post_routes'));
-
+router.use('/comments',require('./comment_route'));
 
 module.exports = router;
