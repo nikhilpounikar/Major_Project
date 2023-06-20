@@ -11,6 +11,14 @@ module.exports.home = function (req, res) {
 
   Post.find({})
     .populate("user")
+    .populate({
+      // fetching all comments related to the post
+      path:'comments',
+      populate:{
+        // fetching all the user who have made comment on the purticular post
+        path:'user'
+      }
+    })
     .exec()
     .then((posts) => {
       return res.render("home", {
