@@ -38,10 +38,19 @@ module.exports.profile = function (req, res) {
   // }
 
   /* Passport authentication */
-  return res.render("profile", {
-    title: "Profile",
-    //user: user,
-  });
+
+  User.findById(req.params.id)
+  .then((user)=>{
+    return res.render("profile", {
+      title: "Profile",
+      //user: user,
+    });
+  })
+  .catch((err)=>{
+    console.log('Error Getting User Details : ',err);
+    return res.redirect('back');
+  })
+ 
 };
 
 module.exports.signUp = function (req, res) {

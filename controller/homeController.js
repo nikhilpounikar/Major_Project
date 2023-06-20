@@ -1,5 +1,5 @@
 const Post = require("../models/Post");
-
+const User = require("../models/User");
 module.exports.home = function (req, res) {
   // console.log(req.cookies);
   // res.cookie('user_id',17);
@@ -13,21 +13,29 @@ module.exports.home = function (req, res) {
     .populate("user")
     .populate({
       // fetching all comments related to the post
-      path:'comments',
-      populate:{
+      path: "comments",
+      populate: {
         // fetching all the user who have made comment on the purticular post
-        path:'user'
-      }
+        path: "user",
+      },
     })
     .exec()
     .then((posts) => {
-      return res.render("home", {
-        title: "Project | Home",
-        posts: posts,
-      });
+      User.find({})
+        .then((users) => {
+          return res.render("home", {
+            title: "Project | Home",
+            posts: posts,
+            all_users: users,
+          });
+        })
+        .catch((err) => {
+          console.log("Error Fetching Users in Home", err);
+          return res.redirect("/user/sign-in");
+        });
     })
     .catch((err) => {
-      console.log("Error Fetching Post",err);
+      console.log("Error Fetching Post", err);
       return res.redirect("/user/sign-in");
     });
 };

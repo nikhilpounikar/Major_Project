@@ -44,3 +44,15 @@ I am some comment! %>
         </ul>
     </div>
 </section>
+
+<section id="friend-list">
+    <h4> Friends
+    </h4>
+    <ul type="none">
+    <% for(u of all_users){ %>
+        <li>
+            <a href="/user/profile/<%= u.id %>"><%= u.email %></a>
+        </li>
+    <% } %>
+</ul>
+</section>
