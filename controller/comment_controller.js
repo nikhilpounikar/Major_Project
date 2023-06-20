@@ -37,6 +37,44 @@ module.exports.create = function(req,res){
         res.redirect('back');
     })
     
-
-
 };
+
+module.exports.destroy =  function(req,res){
+
+    Comment.findById({_id:req.params.id})
+    .then((comment)=>{
+
+        if(comment.user == req.user.id){
+
+            Post.findByIdAndUpdate(comment.post,{$pull:{'comments':comment.id}})
+            .then(()=>{
+                console.log('Comments Removed From Post Removed');
+
+                Comment.findByIdAndDelete(comment.id)
+                .then(()=>{
+                    console.log('Comments Deleted...');
+                    return res.redirect('back');
+                })
+                .catch((err)=>{
+                    console.log('Error Deleting Comment  : ',err);
+                    return res.redirect('back');
+                })
+            })
+            .catch((err)=>{
+                console.log('Error Deleting Comment from Post : ',err);
+                return res.redirect('back');
+            })
+
+
+        }else{
+            console.log('Not Authorised to delete this Comment');
+            return res.redirect('back');
+        }
+
+    })
+    .catch((err)=>{
+        console.log('Error Finding Comment : ',err);
+        return res.redirect('back');
+    })
+
+}
