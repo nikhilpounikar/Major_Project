@@ -36,51 +36,9 @@ I am some comment! %>
         <ul id="">
             
             <% for(post of posts) {%>
+            
+                <%- include('_post') %>
 
-                <li> <span><%= post.content %></span>
-                    
-                    <% if(locals.user && post.user.id == locals.user._id) { %>
-                    <span>
-                        <a href="/posts/delete/<%= post.id %>">Delete</a>
-                    </span>
-                    <% } %>
-                    <br>
-                    <small>
-                        
-                        <!-- <span><%#= post._id %> with _id</span>
-                        <span><%#= post.id %> without _id</span> -->
-                
-                    </small>
-
-                    <% if(locals.user) {%>
-                        <form action="/comments/create" method="post">
-                            <!-- <textarea name="content" cols="30" rows="3"></textarea> -->
-                            <input type="text" name="content" placeholder="Type Here...." required>
-                            <input type="hidden" name="post" value="<%= post._id %>">
-                            <input type="submit" name="Add comment" id="">
-                        </form>
-                    <% } %>
-
-                    <div class="post-comment-list">
-                        <ul id="post-comment-<%=post._id  %>">
-                            <% for(let com of post.comments){ %>
-                                <li>
-                                    <% if(locals.user && com.user.id == locals.user._id) { %>
-                                        <span>
-                                            <a href="/comments/delete/<%= com.id %>">X</a>
-                                        </span>
-                                    <% } %>
-                                    <span><%= com.content %></span>
-                                    <br>
-                                    <small>
-                                        <%= com.user.name %>
-                                    </small>
-                                </li>
-                            <% } %>
-                        </ul>
-
-                    </div>
-                </li>
             <% } %>
 
         </ul>
