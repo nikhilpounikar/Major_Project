@@ -43,7 +43,7 @@ module.exports.profile = function (req, res) {
   .then((user)=>{
     return res.render("profile", {
       title: "Profile",
-      //user: user,
+      profile_user: user,
     });
   })
   .catch((err)=>{
@@ -51,6 +51,33 @@ module.exports.profile = function (req, res) {
     return res.redirect('back');
   })
  
+};
+
+module.exports.update= function (req, res) {
+
+  User.findById(req.params.id)
+  .then((user)=>{
+
+    if(req.params.id == user.id){
+      User.findByIdAndUpdate(user.id,req.body)
+      .then((user)=>{
+        console.log('User Updated');
+        return res.redirect('back');
+      })
+      .catch((err)=>{
+        console.log('Error Updating User Details : ',err);
+        return res.redirect('back');
+      })
+    }else{
+
+      return res.status(401).send('UnAuthorised');
+    }
+    
+  })
+  .catch((err)=>{
+    console.log('Error Getting User Details : ',err);
+    return res.redirect('back');
+  })
 };
 
 module.exports.signUp = function (req, res) {
