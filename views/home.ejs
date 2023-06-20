@@ -37,7 +37,13 @@ I am some comment! %>
             
             <% for(post of posts) {%>
 
-                <li> <%= post.content %>
+                <li> <span><%= post.content %></span>
+                    
+                    <% if(locals.user && post.user.id == locals.user._id) { %>
+                    <span>
+                        <a href="/posts/delete/<%= post.id %>">Delete</a>
+                    </span>
+                    <% } %>
                     <br>
                     <small>
                         
