@@ -18,41 +18,41 @@
 
 I am some comment! %>
 <!-- Code for Layouts -->
-<link rel="stylesheet" href="./css/layout.css">
-<h1>
-   
-</h1>
-
-<section id="feed-post">
-    <h4>Posts</h4>
-
-    <% if(locals.user) {%>
-    <form action="/posts/create" id="new-post-form" method="post">
-        <textarea name="content" cols="30" rows="3" required></textarea>
-        <input type="submit" value="Post">
-    </form>
-    <% } %>
-    <div id="feed-post-container">
-        <ul id="">
-            
-            <% for(post of posts) {%>
-            
-                <%- include('_post') %>
-
-            <% } %>
-
-        </ul>
-    </div>
-</section>
-
-<section id="friend-list">
-    <h4> Friends
-    </h4>
-    <ul type="none">
-    <% for(u of all_users){ %>
-        <li>
-            <a href="/user/profile/<%= u.id %>"><%= u.email %></a>
-        </li>
-    <% } %>
-</ul>
-</section>
+<link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/header.css">
+<link rel="stylesheet" href="/css/layout.css">
+<div id="main-container">
+    <section id="feed-post">
+        <h4>Posts</h4>
+    
+        <% if(locals.user) {%>
+        <form action="/posts/create" id="new-post-form" method="post">
+            <textarea name="content" cols="30" rows="3" required></textarea>
+            <input type="submit" value="Post">
+        </form>
+        <% } %>
+        <div id="feed-post-container">
+            <ul id="">
+                
+                <% for(post of posts) {%>
+                
+                    <%- include('_post') %>
+    
+                <% } %>
+    
+            </ul>
+        </div>
+    </section>
+    
+    <section id="friend-list">
+        <h4> Friends
+        </h4>
+        <ul type="none">
+        <% for(u of all_users){ %>
+            <li>
+                <a href="/user/profile/<%= u.id %>"><%= u.email %></a>
+            </li>
+        <% } %>
+    </ul>
+    </section>
+</div>

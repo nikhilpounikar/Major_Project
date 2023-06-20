@@ -21,8 +21,8 @@ const sassMiddleware = require('node-sass-middleware');
 // this sassMiddleware should be used before server startup so that it could compiled int0 css prior loading views
 app.use(sassMiddleware({
 
-    src: '/assests/sass',
-    dest:'/assests/css',
+    src: './assets/scss',
+    dest:'./assets/css',
     debug:true,
     outputStyle: 'extended',
     prefix: '/css'
@@ -31,6 +31,8 @@ app.use(sassMiddleware({
 app.use(cookieParser());
 app.use(express.urlencoded());
 app.use(express.static('./assets'));
+
+
 
 //puts styles and script to respective postion i.e in head and end the body respectively
 app.set('layout extractStyle ', true);
