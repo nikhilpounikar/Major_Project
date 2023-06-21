@@ -3,18 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><% title %></title>
+    <title>
+        <% title %>
+    </title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.css"
+        integrity="sha512-NXUhxhkDgZYOMjaIgd89zF2w51Mub53Ru3zCNp5LTlEzMbNNAjTjDbpURYGS5Mop2cU4b7re1nOIucsVlrx9fA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"
+        integrity="sha512-lOrm9FgT1LKOJRUXF3tp6QaMorJftUjowOWiDcG5GFZ/q7ukof19V0HKx/GWzXCdt9zYju3/KhBNdCLzK8b90Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="/css/layout.css">
 </head>
 <body>
     <%- include('_header') %>
-    <% if(locals.flash && locals.flash.success.length>0){ %>
-        <h5>
-            <%= locals.flash.success %>
-        </h5>
-    <% } %>
     
     <%- body %>
-    <%#- include('_footer') %>
+    <%# - include('_footer') %>
+    <script>
+        console.log()
+        <% if (locals.flash && locals.flash.success.length > 0) { %>
+        new Noty({
+            theme: 'relax',
+            type:'success',
+            layout:'topRight',
+            timeout:1000,
+            text: '<%= flash.success %>',
+        }).show();
+        <% } %>
+
+        <% if (locals.flash && locals.flash.error.length > 0) { %>
+        new Noty({
+            theme: 'relax',
+            type:'error',
+            layout:'topRight',
+            timeout:1000,
+            text: '<%= flash.success %>',
+        }).show();
+        <% } %>
+    </script>
 </body>
 </html>
