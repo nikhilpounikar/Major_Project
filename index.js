@@ -89,3 +89,21 @@ app.listen(port, function (err) {
 
     console.log('Server Started on port : ', port);
 })
+
+
+
+// Skill Test code
+var crypto = require("crypto"); 
+
+// API credentials
+const publicKey = '4702f56dbcc45349d61a76d91edf52bb';
+const privateKey = 'e4c30e534f5c1a57acca17e1bf283898c84faa89';
+
+const timestamp = Date.now().toString();
+console.log(timestamp);
+const hash = crypto
+  .createHash('md5')
+  .update(timestamp + privateKey + publicKey)
+  .digest('hex');
+
+  console.log(hash);
