@@ -1,6 +1,33 @@
 const Post = require("../models/Post");
 const User = require("../models/User");
-module.exports.home = function (req, res) {
+
+module.exports.home = async function (req, res) {
+  try {
+    let posts = await Post.find({})
+      .populate("user")
+      .populate({
+        // fetching all comments related to the post
+        path: "comments",
+        populate: {
+          // fetching all the user who have made comment on the purticular post
+          path: "user",
+        },
+      });
+
+    let users = await User.find({});
+
+    return res.render("home", {
+      title: "Project | Home",
+      posts: posts,
+      all_users: users,
+    });
+  } catch (err) {
+    console.log("Error in home controller : ", err);
+  }
+};
+
+/* Wihout Asyc await */
+/* module.exports.home = function (req, res) {
   // console.log(req.cookies);
   // res.cookie('user_id',17);
   // return res.render('home',{
@@ -9,7 +36,7 @@ module.exports.home = function (req, res) {
   //  person:"Lucky"
   // })
 
-  Post.find({})
+ Post.find({})
     .populate("user")
     .populate({
       // fetching all comments related to the post
@@ -39,3 +66,4 @@ module.exports.home = function (req, res) {
       return res.redirect("/user/sign-in");
     });
 };
+*/

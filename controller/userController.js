@@ -40,44 +40,34 @@ module.exports.profile = function (req, res) {
   /* Passport authentication */
 
   User.findById(req.params.id)
-  .then((user)=>{
-    return res.render("profile", {
-      title: "Profile",
-      profile_user: user,
+    .then((user) => {
+      return res.render("profile", {
+        title: "Profile",
+        profile_user: user,
+      });
+    })
+    .catch((err) => {
+      console.log("Error Getting User Details : ", err);
+      return res.redirect("back");
     });
-  })
-  .catch((err)=>{
-    console.log('Error Getting User Details : ',err);
-    return res.redirect('back');
-  })
- 
 };
 
-module.exports.update= function (req, res) {
+module.exports.update = async function (req, res) {
+  try {
+    let user = await User.findById(req.params.id);
 
-  User.findById(req.params.id)
-  .then((user)=>{
-
-    if(req.params.id == user.id){
-      User.findByIdAndUpdate(user.id,req.body)
-      .then((user)=>{
-        console.log('User Updated');
-        return res.redirect('back');
-      })
-      .catch((err)=>{
-        console.log('Error Updating User Details : ',err);
-        return res.redirect('back');
-      })
-    }else{
-
-      return res.status(401).send('UnAuthorised');
+    if (req.params.id == user.id) {
+      await User.findByIdAndUpdate(user.id, req.body);
+      console.log("User Updated");
+    } else {
+      return res.status(401).send("UnAuthorised");
     }
-    
-  })
-  .catch((err)=>{
-    console.log('Error Getting User Details : ',err);
-    return res.redirect('back');
-  })
+
+    return res.redirect("back");
+  } catch (error) {
+    console.log("Error While Updating User Details : ", error);
+    return res.redirect("back");
+  }
 };
 
 module.exports.signUp = function (req, res) {
@@ -107,32 +97,28 @@ module.exports.signIn = function (req, res) {
 };
 
 // creates the users
-module.exports.create = function (req, res) {
-  if (req.body.password !== req.body.confirm_password) {
+module.exports.create = async function (req, res) {
+  try {
+    if (req.body.password !== req.body.confirm_password) {
+      return res.redirect("back");
+    }
+
+    let user = await User.findOne({ email: req.body.email });
+
+    if (!user) {
+      await User.create(req.body);
+
+      console.log("Object saved successfully:");
+      return res.redirect("/user/sign-in");
+    } else {
+      console.log("User Already Exists");
+    }
+
+    return res.redirect("back");
+  } catch (err) {
+    console.log("Error Creating User : ", err);
     return res.redirect("back");
   }
-
-  User.findOne({ email: req.body.email })
-    .then((user) => {
-      if (!user) {
-        User.create(req.body)
-          .then((user) => {
-            console.log("Object saved successfully:");
-            return res.redirect("/user/sign-in");
-          })
-          .catch((err) => {
-            console.error(err);
-            return res.redirect("back");
-          });
-      } else {
-        console.log("User Already Exists");
-        return res.redirect("back");
-      }
-    })
-    .catch((err) => {
-      console.log("Error Finding User", err);
-      return res.redirect("back");
-    });
 };
 
 module.exports.createSession = function (req, res) {
@@ -172,8 +158,8 @@ module.exports.createSession = function (req, res) {
 module.exports.destroySession = function (req, res) {
   req.logout(function (err) {
     if (err) {
-      console.log("Error loging Out",err);
-      return res.redirect('back');
+      console.log("Error loging Out", err);
+      return res.redirect("back");
     }
     return res.redirect("/");
   });

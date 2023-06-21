@@ -1,50 +1,39 @@
-const Post = require('../models/Post');
-const Comment = require('../models/Comments');
-module.exports.create = function(req,res){
-
-    Post.create({
-
-        content:req.body.content,
-        user:req.user._id
+const Post = require("../models/Post");
+const Comment = require("../models/Comments");
+module.exports.create = function (req, res) {
+  Post.create({
+    content: req.body.content,
+    user: req.user._id,
+  })
+    .then((post) => {
+      console.log("Post Created.");
+      return res.redirect("back");
     })
-    .then((post)=>{
-
-        console.log(post,"Created.");
-        return res.redirect('back');
-    })
-    .catch((err)=>{
-
-        console.log("error creating post ",err);
-        res.redirect('back');
-    })
-
+    .catch((err) => {
+      console.log("error creating post ", err);
+      res.redirect("back");
+    });
 };
 
-module.exports.destoy = function(req,res){
-    Post.findById({_id:req.params.id})
-    .then((post)=>{
+module.exports.destoy = async function (req, res) {
+  try {
+    let post = await Post.findById({ _id: req.params.id });
 
-        if(post.user == req.user.id){
-            Post.findByIdAndDelete({_id:post._id})
-            .then(()=>{
-                console.log("Post Delete Successfully");
-            }).catch((err)=>{
-                console.log('Error Deleting the Post',err);
-            })
-            
-            Comment.deleteMany({post:post._id})
-            .then(()=>{
-                console.log("Comments Delete Successfully");
-                return res.redirect('back');
-            })
-        }else{
+    if (post.user == req.user.id) {
+      await Post.findByIdAndDelete({ _id: post._id });
 
-            console.log('Invalid User, Your are not allowed to delete this post');
-            return res.redirect('back');
-        }
-    })
-    .catch((err)=>{
-        console.log('Error finding post',err);
-        return res.redirect('back');
-    })
-}
+      console.log("Post Delete Successfully");
+
+      await Comment.deleteMany({ post: post._id });
+
+      console.log("Comments Delete Successfully");
+    } else {
+      console.log("Invalid User, Your are not allowed to delete this post");
+    }
+
+    return res.redirect("back");
+  } catch (err) {
+    console.log("Error in post destroy method  : ", err);
+    return res.redirect("back");
+  }
+};
