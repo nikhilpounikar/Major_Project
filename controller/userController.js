@@ -85,6 +85,7 @@ module.exports.signUp = function (req, res) {
 };
 
 module.exports.signIn = function (req, res) {
+  req.flash('success','Signed In Successfully!');
   //if user is already sign-in redirect to profile
   if (req.isAuthenticated()) {
     return res.redirect("/user/profile");
@@ -150,17 +151,20 @@ module.exports.createSession = function (req, res) {
      }); */
 
   // passport authentication
-
+  req.flash('success','Signed In Successfully!');
   return res.redirect("/");
 };
 
 // responsible for sign-out
 module.exports.destroySession = function (req, res) {
+
+  
   req.logout(function (err) {
     if (err) {
       console.log("Error loging Out", err);
       return res.redirect("back");
     }
+    req.flash('success','You have logged out!');
     return res.redirect("/");
   });
 };

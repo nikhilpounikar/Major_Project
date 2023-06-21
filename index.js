@@ -18,6 +18,9 @@ const MongoStore = require('connect-mongo')(session);
 // get sass middleware
 const sassMiddleware = require('node-sass-middleware');
 
+const flash = require('connect-flash');
+const customMWare = require('./config/middleware');
+
 // this sassMiddleware should be used before server startup so that it could compiled int0 css prior loading views
 app.use(sassMiddleware({
 
@@ -70,6 +73,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMWare.setFlash);
+
 // let middleware handle initial routing
 app.use('/', require('./routes/index'));
 
