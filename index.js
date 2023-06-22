@@ -93,6 +93,7 @@ app.listen(port, function (err) {
 
 
 // Skill Test code
+// following lines are for milestones 6 skill test 2
 var crypto = require("crypto"); 
 
 // API credentials
