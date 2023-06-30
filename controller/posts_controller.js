@@ -1,11 +1,25 @@
 const Post = require("../models/Post");
 const Comment = require("../models/Comments");
+
 module.exports.create = function (req, res) {
   Post.create({
     content: req.body.content,
     user: req.user._id,
   })
     .then((post) => {
+
+      if(req.xhr){
+
+        return res.status(200).json({
+
+          data:{
+            post:post
+          },
+          message:"Post Created."
+        })
+        
+      }
+      
       console.log("Post Created.");
       return res.redirect("back");
     })
