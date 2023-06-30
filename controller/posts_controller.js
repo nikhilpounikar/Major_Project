@@ -19,7 +19,7 @@ module.exports.create = function (req, res) {
         })
         
       }
-      
+
       console.log("Post Created.");
       return res.redirect("back");
     })
@@ -39,6 +39,17 @@ module.exports.destoy = async function (req, res) {
       console.log("Post Delete Successfully");
 
       await Comment.deleteMany({ post: post._id });
+
+      if(req.xhr){
+
+        return res.status(200).json({
+
+          data:{
+            post_id:req.params.id
+          },
+          message:"Post Deleted"
+        })
+      }
 
       console.log("Comments Delete Successfully");
     } else {
