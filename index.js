@@ -1,5 +1,6 @@
 const cookieParser = require('cookie-parser');
 const express = require('express');
+const path = require("path");
 
 const app = express();
 
@@ -46,6 +47,9 @@ app.use(layouts);
 //set up the view engine
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+// configuration to fetch user profile
+app.use('/user/profile/uploads',express.static( __dirname +'/uploads'));
 
 //mongo store is being used to store session cookie in db
 app.use(session({
