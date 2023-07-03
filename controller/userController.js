@@ -57,7 +57,23 @@ module.exports.update = async function (req, res) {
     let user = await User.findById(req.params.id);
 
     if (req.params.id == user.id) {
-      await User.findByIdAndUpdate(user.id, req.body);
+     // await User.findByIdAndUpdate(user.id, req.body);
+
+      User.uploadAvatar(req,res,function(err){
+
+        if(err){
+          console.log("************Multer Error",err);
+        }
+
+        user.name = req.body.name;
+        user.email = req.body.email;
+
+        if(req.body.file){
+          user.avatar = User.avatarPath + req.file.filename;
+        }
+        user.save();
+        
+      })
       console.log("User Updated");
     } else {
       return res.status(401).send("UnAuthorised");
@@ -69,6 +85,8 @@ module.exports.update = async function (req, res) {
     return res.redirect("back");
   }
 };
+
+
 
 module.exports.signUp = function (req, res) {
   // return res.send('<h1>You are on profile</h1>');
