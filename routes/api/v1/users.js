@@ -1,12 +1,11 @@
 const express = require('express');
 
 
-const postApi = require('../../../controller/api/v1/posts_api');
+const userApi = require('../../../controller/api/v1/users_api');
 const router = express.Router();
 
 
 
 //router.post('/create',passport.checkAuthentication,postController.create);
-router.get('/',postApi.index);
-router.delete('/:id',postApi.destoy);
+router.post('/create-session',userApi.createSession);
 module.exports = router;
