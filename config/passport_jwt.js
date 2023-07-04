@@ -9,18 +9,22 @@ var opts ={
     secretOrKey : 'secret',
 }
 
-passport.use(new jwtStrategy(opts, function(jwt_payload, done) {
-    User.findOne({id: jwt_payload.sub}, function(err, user) {
-        if (err) {
-            return done(err, false);
-        }
-        if (user) {
-            return done(null, user);
-        } else {
+passport.use(new jwtStrategy(opts, async function(jwt_payload, done) {
+
+    try {
+        let user = await User.findOne({id: jwt_payload.sub});
+
+        if(!user){
             return done(null, false);
-            // or you could create a new account
         }
-    });
+
+        return done(null, user);
+       
+    } catch (error) {
+        console.log("Error in passport jwt");
+        return done(error,false);
+    }
+   
 }));
 
 module.exports = passport;

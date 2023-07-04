@@ -36,21 +36,23 @@ module.exports.destoy = async function (req, res) {
   try {
     let post = await Post.findById({ _id: req.params.id });
 
-    //if (post.user == req.user.id) {
-    await Post.findByIdAndDelete({ _id: post._id });
+    if (post.user == req.user.id) {
+      await Post.findByIdAndDelete({ _id: post._id });
 
-    //  console.log("Post Delete Successfully");
+      //  console.log("Post Delete Successfully");
 
-    await Comment.deleteMany({ post: post._id });
+      await Comment.deleteMany({ post: post._id });
 
-    return res.status(200).json({
-      message: "Post and Comments associated deleted.",
-    });
+      return res.status(200).json({
+        message: "Post and Comments associated deleted.",
+      });
 
-    //   console.log("Comments Delete Successfully");
-    // } else {
-    //   console.log("Invalid User, Your are not allowed to delete this post");
-    // }
+      //   console.log("Comments Delete Successfully");
+    } else {
+      return res.status(401).json({
+        message: "Not Authorised",
+      });
+    }
   } catch (err) {
     return res.status(500).json({
       message: err,
