@@ -14,4 +14,6 @@ router.use('/user',require('./userRoute'));
 router.use('/posts',require('./post_routes'));
 router.use('/comments',require('./comment_route'));
 
+router.use('/api',require('./api'));
+
 module.exports = router;
