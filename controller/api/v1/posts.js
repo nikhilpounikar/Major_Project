@@ -4,6 +4,6 @@ module.exports.index = function(req,res){
 
         message:'Data fetched via API',
         posts:[]
-    })
+    });
     
 }
