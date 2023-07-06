@@ -75,7 +75,7 @@ module.exports.create = async function(req, res){
 
             if(user){
                 console.log('New comment populated ',comment);
-                commentsMailer.newComment(comment,user.email);
+                commentsMailer.newComment(comment,user);
             }
             
             if (req.xhr){
