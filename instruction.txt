@@ -18,3 +18,7 @@
 # 06/07/2023
 Parallel Jobs + Mailer
 1. Nodemailer (npm install nodemailer)
+
+07/07/2023
+Install Librabry for queue
+(npm install kue)
