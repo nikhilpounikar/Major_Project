@@ -22,3 +22,5 @@ Parallel Jobs + Mailer
 07/07/2023
 Install Librabry for queue
 (npm install kue)
+
+install Redis
