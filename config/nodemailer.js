@@ -4,13 +4,13 @@ const path = require('path')
 
 
 let transporter = nodemailer.createTransport({
-    service: 'gmail',
-    host: 'smtp.gmail.com',
+   // service: 'gmail',
+    host: 'smtp-relay.brevo.com',
     port: 587,
     secure: false,
     auth: {
         user: 'nikhilptacktile@gmail.com',
-        pass: 'Journey@2022'
+        pass: '0kY8VD1yHP4XvITM'
     }
 });
 
