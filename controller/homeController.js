@@ -13,7 +13,12 @@ module.exports.home = async function (req, res) {
           // fetching all the user who have made comment on the purticular post
           path: "user",
         },
-      });
+        populate: {
+            path: 'likes'
+        }
+        
+      }).populate('comments')
+      .populate('likes');
 
     let users = await User.find({});
 

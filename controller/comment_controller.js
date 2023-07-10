@@ -4,6 +4,7 @@ const commentsMailer = require('../mailers/comments_mailer');
 const User = require('../models/User');
 
 const queue = require('../config/kue');
+const Like = require('../models/like');
 
 const commentEmailWorker = require('../workers/comment_worker');
 
@@ -115,42 +116,68 @@ module.exports.create = async function(req, res){
     
 }
 
-module.exports.destroy =  function(req,res){
+// module.exports.destroy =  function(req,res){
 
-    Comment.findById({_id:req.params.id})
-    .then((comment)=>{
+//     Comment.findById({_id:req.params.id})
+//     .then((comment)=>{
 
-        if(comment.user == req.user.id){
+//         if(comment.user == req.user.id){
 
-            Post.findByIdAndUpdate(comment.post,{$pull:{'comments':comment.id}})
-            .then(()=>{
-                console.log('Comments Removed From Post Removed');
+//             Post.findByIdAndUpdate(comment.post,{$pull:{'comments':comment.id}})
+//             .then(()=>{
+//                 console.log('Comments Removed From Post Removed');
 
-                Comment.findByIdAndDelete(comment.id)
-                .then(()=>{
-                    console.log('Comments Deleted...');
-                    return res.redirect('back');
-                })
-                .catch((err)=>{
-                    console.log('Error Deleting Comment  : ',err);
-                    return res.redirect('back');
-                })
-            })
-            .catch((err)=>{
-                console.log('Error Deleting Comment from Post : ',err);
-                return res.redirect('back');
-            })
+//                 Comment.findByIdAndDelete(comment.id)
+//                 .then(()=>{
+//                     console.log('Comments Deleted...');
+//                     return res.redirect('back');
+//                 })
+//                 .catch((err)=>{
+//                     console.log('Error Deleting Comment  : ',err);
+//                     return res.redirect('back');
+//                 })
+//             })
+//             .catch((err)=>{
+//                 console.log('Error Deleting Comment from Post : ',err);
+//                 return res.redirect('back');
+//             })
 
 
-        }else{
-            console.log('Not Authorised to delete this Comment');
-            return res.redirect('back');
-        }
+//         }else{
+//             console.log('Not Authorised to delete this Comment');
+//             return res.redirect('back');
+//         }
 
-    })
-    .catch((err)=>{
-        console.log('Error Finding Comment : ',err);
+//     })
+//     .catch((err)=>{
+//         console.log('Error Finding Comment : ',err);
+//         return res.redirect('back');
+//     })
+
+// }
+
+module.exports.destroy = async function(req, res) {
+    try {
+      const comment = await Comment.findById(req.params.id);
+      
+      if (comment.user == req.user.id) {
+        await Post.findByIdAndUpdate(comment.post, { $pull: { 'comments': comment.id } });
+        console.log('Comments Removed From Post Removed');
+
+        // CHANGE :: destroy the associated likes for this comment
+        await Like.deleteMany({likeable: comment._id, onModel: 'Comment'});
+  
+        await Comment.findByIdAndDelete(comment.id);
+        console.log('Comment Deleted...');
+        
         return res.redirect('back');
-    })
-
-}
+      } else {
+        console.log('Not Authorized to delete this Comment');
+        return res.redirect('back');
+      }
+    } catch (err) {
+      console.log('Error Deleting Comment:', err);
+      return res.redirect('back');
+    }
+  };
+  

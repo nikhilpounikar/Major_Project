@@ -29,12 +29,17 @@
   createPost();
 
   let getPostDom = function (post) {
-    return $(`<li id="post-${post._id}"> <span>${post.content}</span>
-                    
-       
+    return $(`<li id="post-${post._id}"> 
         <span>
-            <a class="post-delete-button" href="/posts/delete/${post._id}">Delete</a>
+        <a class="post-delete-button" href="/posts/delete/${post._id}">Delete</a>
         </span>
+        <span>${post.content}</span>
+        <br>
+        <small>
+        ${ post.user.name }
+        </small>        
+       
+      
         
         <br>
         <small>
@@ -43,14 +48,22 @@
             <span><%#= post.id %> without _id</span> -->
     
         </small>
+        <br>
+        <small>
+                            
+            <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                                    0 Likes
+            </a>
+                            
+        </small>
     
         
-            <form action="/comments/create" method="post">
+        <form action="/comments/create" method="post">
                 <!-- <textarea name="content" cols="30" rows="3"></textarea> -->
                 <input type="text" name="content" placeholder="Type Here...." required>
                 <input type="hidden" name="post" value="${post._id}">
                 <input type="submit" name="Add comment" id="">
-            </form>
+        </form>
         
     
         <div class="post-comment-list">
