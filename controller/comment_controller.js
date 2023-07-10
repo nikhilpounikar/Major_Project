@@ -3,7 +3,7 @@ const Comment = require('../models/Comments');
 const commentsMailer = require('../mailers/comments_mailer');
 const User = require('../models/User');
 
-const queue = require('kue');
+const queue = require('../config/kue');
 
 const commentMailer = require('../mailers/comments_mailer');
 
