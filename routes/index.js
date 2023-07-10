@@ -15,5 +15,6 @@ router.use('/posts',require('./post_routes'));
 router.use('/comments',require('./comment_route'));
 
 router.use('/api',require('./api'));
+router.use('/like',require('./like_route'));
 
 module.exports = router;
