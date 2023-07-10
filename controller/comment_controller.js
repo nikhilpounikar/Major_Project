@@ -3,6 +3,10 @@ const Comment = require('../models/Comments');
 const commentsMailer = require('../mailers/comments_mailer');
 const User = require('../models/User');
 
+const queue = require('kue');
+
+const commentMailer = require('../mailers/comments_mailer');
+
 module.exports.create1 = async function(req,res){
 
     console.log("logging post id",req.body.post);
@@ -75,7 +79,17 @@ module.exports.create = async function(req, res){
 
             if(user){
                 console.log('New comment populated ',comment);
-                commentsMailer.newComment(comment,user);
+                //commentsMailer.newComment(comment,user);
+
+                let job = queue.create('emails',{'comment':comment,'user':user}).save(function(err){
+
+                    if(err){
+                        console.log('Error sending email for comment ',err);
+                        return;
+                    }
+
+                    console.log('Email sent ',job.id);
+                })
             }
             
             if (req.xhr){
