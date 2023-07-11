@@ -19,6 +19,7 @@
 I am some comment! %>
 <!-- Code for Layouts -->
 <link rel="stylesheet" href="/css/home.css">
+<link rel="stylesheet" href="/css/chat_box.css">
 <div id="main-container">
     <section id="feed-post">
         <h4>Posts</h4>
@@ -53,6 +54,8 @@ I am some comment! %>
         <% } %>
     </ul>
     </section>
+
+    <%- include('_chat_box') -%>
 </div>
 <script src="/js/home.js"></script>
 <!-- CHANGE :: import the script file for toggle likes, also run it over for the already present posts and comments on the page -->
