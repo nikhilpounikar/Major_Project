@@ -4,7 +4,7 @@ const development = {
     name: 'development',
     asset_path: '/assets',
     session_cookie_key: 'nikhilpounikar',
-    db: 'codeial_development',
+    db: 'major_project_1_development',
     smtp: {
         service: 'gmail',
         host: 'smtp.gmail.com',
