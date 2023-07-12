@@ -72,6 +72,6 @@ I am some comment! %>
 <!-- Authenticate if user is loged in  -->
 <% if (locals.user){ %>
     <script>
-        new ChatEngine('user-chat-box', '<%= locals.user._id %>')
+        new ChatEngine('user-chat-box', '<%= locals.user.email %>')
     </script>
 <% } %>
