@@ -7,6 +7,7 @@ const app = express();
 const port = 8000;
 const layouts = require("express-ejs-layouts");
 const env = require("./config/environment");
+const logger = require('morgan');
 
 const db = require("./config/mongoose");
 
