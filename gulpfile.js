@@ -7,12 +7,12 @@ gulp.task('css', function() {
   console.log('minifying css...');
   
   // Process Sass files
-  return gulp.src('./assets/sass/**/*.scss')
+  return gulp.src('./assets/scss/**/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(cssnano())
     .pipe(gulp.dest('./assets/css'))
     //.pipe(rev())
-    .pipe(gulp.dest('./public/assets'))
+    .pipe(gulp.dest('./public/assets/css'))
     // .pipe(rev.manifest({
     //   base: 'public',
     //   merge: true
