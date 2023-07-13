@@ -1,7 +1,7 @@
 const gulp = require('gulp');
-const sass = require('gulp-sass');
+const sass = require('gulp-sass')(require('sass'));
 const cssnano = require('gulp-cssnano');
-const rev = require('gulp-rev');
+//const rev = require('gulp-rev');
 
 gulp.task('css', function() {
   console.log('minifying css...');
@@ -11,11 +11,11 @@ gulp.task('css', function() {
     .pipe(sass().on('error', sass.logError))
     .pipe(cssnano())
     .pipe(gulp.dest('./assets/css'))
-    .pipe(rev())
+    //.pipe(rev())
     .pipe(gulp.dest('./public/assets'))
-    .pipe(rev.manifest({
-      base: 'public',
-      merge: true
-    }))
+    // .pipe(rev.manifest({
+    //   base: 'public',
+    //   merge: true
+    // }))
     .pipe(gulp.dest('./public/assets'));
 });
