@@ -46,7 +46,7 @@ if (env.name != "production") {
 }
 
 app.use(cookieParser());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended:false}));
 app.use(express.static(env.asset_path));
 app.use(logger(env.morgan.mode, env.morgan.options));
 //puts styles and script to respective postion i.e in head and end the body respectively
