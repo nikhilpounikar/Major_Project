@@ -1,6 +1,6 @@
 # install passport library
 # create passport_local_strategy
-# use setAuthenticatedUser method in index.js after session is created
+# use the setAuthenticatedUser method in index.js after the session is created
 
 
 
@@ -24,3 +24,5 @@ Install Librabry for queue
 (npm install kue)
 
 install Redis
+
+the proper flow needs to be learned as the code has gotten bulky
