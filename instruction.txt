@@ -2,7 +2,6 @@
 # create passport_local_strategy
 # use the setAuthenticatedUser method in index.js after the session is created
 
-
 # install connect mongo -> npm install connect-mongo
 # install scss/sass -> npm install node-sass-middleware
 
