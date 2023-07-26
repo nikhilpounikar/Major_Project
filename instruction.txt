@@ -3,12 +3,8 @@
 # use the setAuthenticatedUser method in index.js after the session is created
 
 
-
-
 # install connect mongo -> npm install connect-mongo
 # install scss/sass -> npm install node-sass-middleware
-
-
 
 # 05/07/2023
 -- Passport JWT 
