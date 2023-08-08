@@ -1,4 +1,4 @@
-// gettting dependencies
+// getting dependencies
 const express = require('express');
 
 // getting homeController
